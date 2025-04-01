@@ -1,11 +1,20 @@
 - hosts: terraform-ansible
   tasks:
-    - name: Criando o Arquivo Index.html
-      copy: 
-        dest: /home/ubuntu/index.html
-        content: <h1>É Verdade esse bilhete</h1>
+    - name: Instalando o python3 e o Virtualenv
+      apt:
+        pkg:
+          - python3
+          - virtualenv
+        update_cache: yes
+      become: true
+      
 
-    - name: Criando o Servidor HTTP
-      shell: "nohup busybox httpd -f -p 8080 &"
+    - name: Instalando as dependências do projeto
+      pip:
+        virtualenv: /home/ubuntu/tcc/venv
+        name:
+          - django
+          - djangorestframework
+      become: true
 
       
